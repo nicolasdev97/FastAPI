@@ -3,5 +3,6 @@ def get_full_name(first_name: str, last_name: str):
     return full_name
 
 print(get_full_name("John", "Ortíz"))
+
 # Error
 # print(get_full_name("John", 5))

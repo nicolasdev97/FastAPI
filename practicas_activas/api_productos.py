@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from uuid import uuid4 as uuid
 
 # Clase producto
 class Producto(BaseModel):
@@ -12,6 +13,7 @@ class Producto(BaseModel):
 # Se define la API
 app =FastAPI()
 
+# Pendiente
 productos = []
 
 # Mensaje de bienvenida
@@ -27,5 +29,6 @@ def obtener_productos():
 # Crear productos
 @app.post("/producto")
 def crear_producto(producto: Producto):
+    producto.id = str(uuid()) # Genera un id unico para el producto
     productos.append(producto)
     return {"mensaje": "Producto creado satisfactoriamente"}

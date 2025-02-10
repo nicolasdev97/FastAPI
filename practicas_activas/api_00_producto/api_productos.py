@@ -53,8 +53,8 @@ def eliminar_producto_por_id(producto_id: str):
 
     # Si se encuentra un producto
     if len(resultado):
-        producto = resultado[0]
-        productos.remove(producto)
+        producto_encontrado = resultado[0]
+        productos.remove(producto_encontrado)
 
         return {"mensaje": f"El producto con ID {producto_id} fue eliminado"}
 

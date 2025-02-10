@@ -11,7 +11,7 @@ class Producto(BaseModel):
     proveedor: str
 
 # Se crea la API
-app =FastAPI()
+app = FastAPI()
 
 # Lista donde irán todos los productos
 productos = []
@@ -21,7 +21,7 @@ productos = []
 def index():
     return {"mensaje": "Bienvenidos a la API de Productos"}
 
-# Listar productos
+# Leer productos
 @app.get("/producto")
 def obtener_productos():
     return productos

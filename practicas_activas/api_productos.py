@@ -10,7 +10,7 @@ class Producto(BaseModel):
     precio_venta: float
     proveedor: str
 
-# Se define la API
+# Se crea la API
 app =FastAPI()
 
 # Lista donde irán todos los productos
@@ -41,6 +41,41 @@ def obtener_producto_por_id(producto_id: str):
     # Si se encuentra un producto
     if len(resultado):
         return resultado[0]
+
+    # Si no encuentran un producto
+    # return {"mensaje": f"El producto con el ID {producto_id} no fue encontrado"}
+    raise HTTPException(status_code = 404, detail="El producto con el ID {producto_id} no fue encontrado")
+
+# Eliminar productos a partir de un id
+@app.delete("/producto/{producto_id}")
+def eliminar_producto_por_id(producto_id: str):
+    resultado = list(filter(lambda p: p.id == producto_id, productos))
+
+    # Si se encuentra un producto
+    if len(resultado):
+        producto = resultado[0]
+        productos.remove(producto)
+
+        return {"mensaje": f"El producto con ID {producto_id} fue eliminado"}
+
+    # Si no encuentran un producto
+    # return {"mensaje": f"El producto con el ID {producto_id} no fue encontrado"}
+    raise HTTPException(status_code = 404, detail="El producto con el ID {producto_id} no fue encontrado")
+
+# Actualizar productos a partir de un id
+@app.put("/producto/{producto_id}")
+def actualizar_producto(producto_id: str, producto: Producto):
+    resultado = list(filter(lambda p: p.id == producto_id, productos))
+
+    # Si se encuentra un producto
+    if len(resultado):
+        producto_encontrado = resultado[0]
+        producto_encontrado.nombre = producto.nombre
+        producto_encontrado.precio_compra = producto.precio_compra
+        producto_encontrado.precio_venta = producto.precio_venta
+        producto_encontrado.proveedor = producto.proveedor
+
+        return producto_encontrado
 
     # Si no encuentran un producto
     # return {"mensaje": f"El producto con el ID {producto_id} no fue encontrado"}
